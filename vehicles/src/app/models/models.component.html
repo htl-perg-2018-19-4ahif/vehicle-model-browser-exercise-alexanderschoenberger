@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-label>Year</mat-label>
+  <mat-select [(ngModel)]='this.selectedYear'>
+    <mat-option *ngFor="let year of years" [value]='year'>{{year}}</mat-option>
+  </mat-select>
+</mat-card>
+<mat-card>
+  <mat-label>Make</mat-label>
+  <mat-select [(ngModel)]='this.selectedMake'>
+    <mat-option *ngFor="let make of makes" [value]='make'>{{make}}</mat-option>
+  </mat-select>
+</mat-card>
+<mat-card>
+<mat-checkbox [(ngModel)]='this.filter'>Use Filter</mat-checkbox>
+<button mat-button (click)='this.refresh()'>Refresh</button>
+</mat-card>
+<div [hidden]="data.length==0" class="mat-elevation-z8">
+  <table mat-table [dataSource]="data">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef> Year </th>
+      <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="make">
+      <th mat-header-cell *matHeaderCellDef> Make </th>
+      <td mat-cell *matCellDef="let element"> {{element.make}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="model">
+      <th mat-header-cell *matHeaderCellDef> Model </th>
+      <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+  <button mat-button [disabled]="page==1" (click)="previous()">Previous</button>
+  <button mat-button [disabled]="this.data.length<10" (click)="next()">Next</button>
+</div>
